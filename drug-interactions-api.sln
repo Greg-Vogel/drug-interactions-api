@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5EA1977C-5EA1-477C-A655-B7C6B3BE2144}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugInteractions.App", "src\DrugInteractions.App\DrugInteractions.App.csproj", "{4A8B3C71-4A8B-4C71-8B3C-714A8B3C714A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugInteractions.Domain", "src\DrugInteractions.Domain\DrugInteractions.Domain.csproj", "{5B9C4D82-5B9C-4D82-9C4D-825B9C4D825B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugInteractions.Adapters.OpenFda", "src\DrugInteractions.Adapters.OpenFda\DrugInteractions.Adapters.OpenFda.csproj", "{6CAD5E93-6CAD-5E93-AD5E-936CAD5E936C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugInteractions.Adapters.Memory", "src\DrugInteractions.Adapters.Memory\DrugInteractions.Adapters.Memory.csproj", "{7DBE6FA4-7DBE-6FA4-BE6F-A47DBE6FA47D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugInteractions.Tests", "src\DrugInteractions.Tests\DrugInteractions.Tests.csproj", "{8EAF7B55-8EAF-7B55-AF7B-558EAF7B558E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A8B3C71-4A8B-4C71-8B3C-714A8B3C714A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A8B3C71-4A8B-4C71-8B3C-714A8B3C714A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A8B3C71-4A8B-4C71-8B3C-714A8B3C714A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A8B3C71-4A8B-4C71-8B3C-714A8B3C714A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B9C4D82-5B9C-4D82-9C4D-825B9C4D825B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B9C4D82-5B9C-4D82-9C4D-825B9C4D825B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B9C4D82-5B9C-4D82-9C4D-825B9C4D825B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B9C4D82-5B9C-4D82-9C4D-825B9C4D825B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CAD5E93-6CAD-5E93-AD5E-936CAD5E936C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CAD5E93-6CAD-5E93-AD5E-936CAD5E936C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CAD5E93-6CAD-5E93-AD5E-936CAD5E936C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CAD5E93-6CAD-5E93-AD5E-936CAD5E936C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DBE6FA4-7DBE-6FA4-BE6F-A47DBE6FA47D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DBE6FA4-7DBE-6FA4-BE6F-A47DBE6FA47D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DBE6FA4-7DBE-6FA4-BE6F-A47DBE6FA47D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DBE6FA4-7DBE-6FA4-BE6F-A47DBE6FA47D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EAF7B55-8EAF-7B55-AF7B-558EAF7B558E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EAF7B55-8EAF-7B55-AF7B-558EAF7B558E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EAF7B55-8EAF-7B55-AF7B-558EAF7B558E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EAF7B55-8EAF-7B55-AF7B-558EAF7B558E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4A8B3C71-4A8B-4C71-8B3C-714A8B3C714A} = {5EA1977C-5EA1-477C-A655-B7C6B3BE2144}
+		{5B9C4D82-5B9C-4D82-9C4D-825B9C4D825B} = {5EA1977C-5EA1-477C-A655-B7C6B3BE2144}
+		{6CAD5E93-6CAD-5E93-AD5E-936CAD5E936C} = {5EA1977C-5EA1-477C-A655-B7C6B3BE2144}
+		{7DBE6FA4-7DBE-6FA4-BE6F-A47DBE6FA47D} = {5EA1977C-5EA1-477C-A655-B7C6B3BE2144}
+		{8EAF7B55-8EAF-7B55-AF7B-558EAF7B558E} = {5EA1977C-5EA1-477C-A655-B7C6B3BE2144}
+	EndGlobalSection
+EndGlobal

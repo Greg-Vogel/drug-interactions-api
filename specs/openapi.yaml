@@ -1,0 +1,259 @@
+openapi: 3.1.0
+info:
+  title: Drug Interactions API
+  description: |
+    API for managing drug interaction notes and analyzing co-occurrence signals from openFDA.
+    
+    Features:
+    - Manage interaction notes between drug pairs
+    - Query interaction notes by drug pair
+    - Analyze adverse event signals for drug combinations from openFDA
+  version: '1.0.0'
+  
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+
+tags:
+  - name: interactions
+    description: Drug interaction note management
+  - name: signals
+    description: Drug combination signal analysis using openFDA
+
+paths:
+  /interactions:
+    post:
+      tags:
+        - interactions
+      summary: Create or update an interaction note
+      description: Upsert an interaction note for a specific drug pair
+      operationId: upsertInteraction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InteractionUpsert'
+            example:
+              drugA: "Aspirin"
+              drugB: "Warfarin"
+              note: "Increased risk of bleeding. Monitor closely."
+      responses:
+        '200':
+          description: Interaction note updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InteractionResponse'
+        '201':
+          description: Interaction note created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InteractionResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      tags:
+        - interactions
+      summary: Retrieve interaction note
+      description: Get the interaction note for a specific drug pair if it exists
+      operationId: getInteraction
+      parameters:
+        - name: drugA
+          in: query
+          description: First drug name
+          required: true
+          schema:
+            type: string
+            pattern: ^[a-zA-Z- ]{3,60}$
+          example: "Aspirin"
+        - name: drugB
+          in: query
+          description: Second drug name
+          required: true
+          schema:
+            type: string
+            pattern: ^[a-zA-Z- ]{3,60}$
+          example: "Warfarin"
+      responses:
+        '200':
+          description: Interaction note found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InteractionResponse'
+        '404':
+          description: No interaction note found for the drug pair
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /signals:
+    get:
+      tags:
+        - signals
+      summary: Analyze drug combination signals
+      description: |
+        Query openFDA to find adverse event reports where both drugs appear,
+        aggregating the most common reactions.
+      operationId: getDrugSignals
+      parameters:
+        - name: drugA
+          in: query
+          description: First drug name
+          required: true
+          schema:
+            type: string
+            pattern: ^[a-zA-Z- ]{3,60}$
+          example: "Aspirin"
+        - name: drugB
+          in: query
+          description: Second drug name
+          required: true
+          schema:
+            type: string
+            pattern: ^[a-zA-Z- ]{3,60}$
+          example: "Warfarin"
+        - name: limit
+          in: query
+          description: Maximum number of top reactions to return
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+          example: 50
+      responses:
+        '200':
+          description: Signal analysis results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignalResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '502':
+          description: Error communicating with openFDA API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    InteractionUpsert:
+      type: object
+      required:
+        - drugA
+        - drugB
+        - note
+      properties:
+        drugA:
+          type: string
+          description: Name of the first drug
+          pattern: ^[a-zA-Z- ]{3,60}$
+          example: "Aspirin"
+        drugB:
+          type: string
+          description: Name of the second drug
+          pattern: ^[a-zA-Z- ]{3,60}$
+          example: "Warfarin"
+        note:
+          type: string
+          description: Interaction note text
+          minLength: 1
+          maxLength: 1000
+          example: "Increased risk of bleeding. Monitor closely."
+
+    InteractionResponse:
+      type: object
+      required:
+        - drugA
+        - drugB
+        - note
+        - createdAt
+        - updatedAt
+      properties:
+        drugA:
+          type: string
+          example: "Aspirin"
+        drugB:
+          type: string
+          example: "Warfarin"
+        note:
+          type: string
+          example: "Increased risk of bleeding. Monitor closely."
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-10-16T10:30:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2025-10-16T10:30:00Z"
+
+    SignalResponse:
+      type: object
+      required:
+        - drugA
+        - drugB
+        - count
+        - topReactions
+      properties:
+        drugA:
+          type: string
+          example: "Aspirin"
+        drugB:
+          type: string
+          example: "Warfarin"
+        count:
+          type: integer
+          description: Total number of reports containing both drugs
+          example: 157
+        topReactions:
+          type: array
+          description: Most frequent adverse reactions reported
+          items:
+            type: object
+            required:
+              - reaction
+              - count
+            properties:
+              reaction:
+                type: string
+                example: "Gastrointestinal Hemorrhage"
+              count:
+                type: integer
+                example: 42
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Error code
+          example: "VALIDATION_ERROR"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "Drug name must be 3-60 characters and contain only letters, spaces, and hyphens"
